@@ -53,27 +53,66 @@ class Graph {
     this.nodes.delete(vertex);
   }
 
+  // /** traverse graph with DFS and returns array of Node values */
+  // // recursion
+  // depthFirstSearch(start, seen = new Set(), values = []) {
+  //   if (!start) return null;
+
+  //   seen.add(start);
+  //   values.push(start.value);
+
+  //   for (let neighbor of start.adjacent) {
+  //     if (!seen.has(neighbor)) {
+  //       this.depthFirstSearch(neighbor, seen, values);
+  //     }
+  //   }
+
+  //   return values;
+  // }
+
   /** traverse graph with DFS and returns array of Node values */
-  depthFirstSearch(start, seen = new Set(), values = []) {
-    if (!start) return null;
+  // iteration
+  depthFirstSearch(start) {
+    let nodesVisited = new Set();
+    let toVisitStack = [start];
 
-    seen.add(start);
-    values.push(start.value);
+    while (toVisitStack.length) {
+      let currNode = toVisitStack.pop();
+      nodesVisited.add(currNode);
 
-    for (let neighbor of start.adjacent) {
-      if (!seen.has(neighbor)) {
-        this.depthFirstSearch(neighbor, seen, values);
+      for (let neighbor of currNode.adjacent) {
+        if (!nodesVisited.has(neighbor)) {
+          toVisitStack.push(neighbor);
+        }
       }
     }
 
-    return values;
+    return Array.from(nodesVisited).map(n => n.value);
   }
 
   /** traverse graph with BDS and returns array of Node values */
-  breadthFirstSearch(start) { }
+  breadthFirstSearch(start) {
+    let nodesVisited = new Set();
+    let toVisitQueue = [start]; // array is not the best choice but whatever
+
+    while (toVisitQueue.length) {
+      let currNode = toVisitQueue.shift();
+      nodesVisited.add(currNode);
+
+      for (let neighbor of currNode.adjacent) {
+        if (!nodesVisited.has(neighbor)) {
+          toVisitQueue.push(neighbor);
+        }
+      }
+    }
+
+    return Array.from(nodesVisited).map(n => n.value);
+  }
 
   /** find the distance of the shortest path from the start vertex to the end vertex */
-  distanceOfShortestPath(start, end) { }
+  distanceOfShortestPath(start, end) {
+
+  }
 }
 
 module.exports = { Graph, Node }

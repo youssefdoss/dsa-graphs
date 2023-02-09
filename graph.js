@@ -116,7 +116,7 @@ class Graph {
     let nodesVisited = new Set();
     let toVisitQueue = [[start, 0]];
 
-    while(toVisitQueue.length) {
+    while (toVisitQueue.length) {
       let [currNode, distanceSoFar] = toVisitQueue.shift();
       nodesVisited.add(currNode);
 
@@ -139,6 +139,7 @@ class Graph {
      *
      * start/end: { value: "", adjacent: [ {}, {} ] }
      */
+  // BFS, iteration
   shortestPath(start, end) {
     if (start === end) return [start];
 

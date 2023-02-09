@@ -1,3 +1,5 @@
+'use strict';
+
 /** Node class for graph. */
 
 class Node {
@@ -111,8 +113,56 @@ class Graph {
 
   /** find the distance of the shortest path from the start vertex to the end vertex */
   distanceOfShortestPath(start, end) {
+    let nodesVisited = new Set();
+    let toVisitQueue = [[start, 0]];
 
+    while(toVisitQueue.length) {
+      let [currNode, distanceSoFar] = toVisitQueue.shift();
+      nodesVisited.add(currNode);
+
+      if (currNode === end) return distanceSoFar;
+
+      for (let neighbor of currNode.adjacent) {
+        if (!nodesVisited.has(neighbor)) {
+          toVisitQueue.push([neighbor, distanceSoFar + 1]);
+        }
+      }
+    }
+
+    return;
+  }
+
+  /**shortestPath
+     *
+     * Finds the shortest path from start vertex to end vertex and returns
+     * path or null if no path.
+     *
+     * start/end: { value: "", adjacent: [ {}, {} ] }
+     */
+  shortestPath(start, end) {
+    if (start === end) return [start];
+
+    let nodesVisited = new Set();
+    let toVisitQueue = [[start, []]];
+
+    while (toVisitQueue.length) {
+      let [currNode, currPath] = toVisitQueue.shift();
+      nodesVisited.add(currNode);
+
+      if (currNode === end) {
+        return [...currPath, end];
+      }
+
+      for (let neighbor of currNode.adjacent) {
+        if (!nodesVisited.has(neighbor)) {
+          toVisitQueue.push([neighbor, [...currPath, currNode]]);
+        }
+      }
+    }
+
+    return null;
   }
 }
+
 
 module.exports = { Graph, Node }

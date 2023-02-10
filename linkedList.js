@@ -195,6 +195,31 @@ class LinkedList {
         this.head.next = left;
 
     }
+
+    /** pivotAroundValue() Rearrange items in linked list so that all
+     * items with data less than the given value come first, and
+     * items with greater than or equal to the given value come second
+     *
+     * pivotVal: number
+     */
+
+    pivot(pivotVal, firstHalf = [], secondHalf = []) {
+        while (this.length) {
+            if (this.head.val < pivotVal) {
+                firstHalf.push(this.shift());
+            } else {
+                secondHalf.push(this.shift());
+            }
+        }
+
+        while (firstHalf.length) {
+            this.push(firstHalf.shift());
+        }
+
+        while (secondHalf.length) {
+            this.push(secondHalf.shift());
+        }
+    }
 }
 
 
